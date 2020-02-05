@@ -1,33 +1,41 @@
+{# template post-listing.html.twig BEGIN #}
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container">
 
-    {% for message in app.flashes() %}
+    {% for message in app.flashes('success') %}
         <div class="alert alert-success">{{ message }}</div>
     {% endfor %}
 
-    <h2>List of all posts</h2>
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for post in posts %}
-                <tr>
-                    <th># {{ loop.index }} </th>
-                    <td>{{ post.id }}</td>
-                    <td>{{ post.title }}</td>
-                    <td>{{ post.author }}</td>
-                    <td><a href="{{ path('post.show', {id: post.id}) }}">More</a><a href="{{ path('post.delete', {id: post.id}) }}">Delete</a></td>
-                </tr>
-            {% endfor %}
+        <h2>List of all posts</h2>
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <th># {{ loop.index }} </th>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.author }}</td>
+                        <td>
+                            <a href="{{ path('post.show', {id: post.id}) }}" class="btn btn-primary">More</a>
+                            <a href="{{ path('post.delete', {id: post.id}) }}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('post.create') }}" class="btn btn-secondary btn-lg btn-block">Add new post</a>
+    </div>
 
-        </tbody>
-    </table>
 {% endblock %}
+{# template post-listing.html.twig END #}

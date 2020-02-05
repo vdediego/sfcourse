@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -31,27 +32,36 @@ class PostController extends AbstractController
 
     /**
      * @Route("/create", name="create")
-     * @return RedirectResponse
+     * @param Request $request
+     * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $post = new Post();
-        $post->setAuthor('Optional Author');
-        $post->setTitle('Mandatory Title');
 
-        // Entity Manager
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($post);
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
 
-        // Final DB statement
-        $em->flush();
-        $this->addFlash('success', 'Post has been created!');
+        if ($form->isSubmitted()) {
+            // Entity Manager: interact with the DB
+            $em = $this->getDoctrine()->getManager();
 
-        return $this->redirectToRoute('post.index');
+            // Final DB statement
+            $em->persist($post);
+            $em->flush();
+
+            $this->addFlash('success', 'Post has been created successfully!');
+
+            return $this->redirectToRoute('post.index');
+        }
+
+        return $this->render('post/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
-     * @Route("/delete/{id}", name="delete")
+     * @Route("/delete", name="delete")
      * @param Post $post
      * @return RedirectResponse
      */
@@ -64,7 +74,7 @@ class PostController extends AbstractController
         // Final DB statement
         $em->flush();
 
-        $this->addFlash('success', 'Post has been removed!');
+        $this->addFlash('success', 'Post has been removed successfully!');
 
         return $this->redirectToRoute('post.index');
     }

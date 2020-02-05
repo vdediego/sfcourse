@@ -13,6 +13,6 @@ class MainController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('post/post-listing.html.twig');
+        return $this->redirectToRoute('post.index');
     }
 }
