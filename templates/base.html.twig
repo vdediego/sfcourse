@@ -1,10 +1,12 @@
+{# template base.html.twig BEGIN #}
 <!DOCTYPE html>
 <html lang="ES">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Symfony course{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
             {# 'app' must match the first argument to addEntry() in webpack.config.js #}
             {{ encore_entry_link_tags('app') }}
 
@@ -14,13 +16,16 @@
     </head>
     <body>
         {% include '/navbar/navbar-simple.html.twig' %}
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+        <div class="container">
+            {% block body %}{% endblock %}
+            {% block javascripts %}
+                {{ encore_entry_script_tags('app') }}
 
-            <!-- Renders app.js & a webpack runtime.js file
-                <script src="/build/runtime.js"></script>
-                <script src="/build/app.js"></script> -->
-        {% endblock %}
+                <!-- Renders app.js & a webpack runtime.js file
+                    <script src="/build/runtime.js"></script>
+                    <script src="/build/app.js"></script> -->
+            {% endblock %}
+        </div>
     </body>
 </html>
+{# template base.html.twig END #}
