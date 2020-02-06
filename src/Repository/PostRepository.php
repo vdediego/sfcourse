@@ -19,6 +19,24 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    public function findPostsWithinSameCategory($postId)
+    {
+        return $this->createQueryBuilder('p')
+            ->select([
+                'p.id AS post_id',
+                'p.title AS post_title',
+                'p.author AS post_author',
+                'p.description AS post_description',
+                'c.name AS category_name ',
+                'c.description AS category_description'
+             ])
+            ->innerJoin('p.category', 'c')
+            ->where('p.id = :id')
+            ->setParameter('id', $postId)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */

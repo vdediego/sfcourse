@@ -1,0 +1,43 @@
+{# template post-category-listing.html.twig BEGIN #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        {% if data %}
+
+        <h1>List of all posts within category <strong>{{ data.category_name }}</strong></h1>
+        <em>{{ data.category_description }}</em>
+        <hr>
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <th># {{ loop.index }} </th>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.author }}</td>
+                        <td>{{ post.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <h1>The selected post does not have a category</h1>
+            <a class="nav-link" href="{{ path('post.index') }}">Post List<span class="sr-only">(current)</span></a>
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+{# template post-category-listing.html.twig END #}

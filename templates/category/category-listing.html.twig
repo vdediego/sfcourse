@@ -1,0 +1,43 @@
+{# template category/category-listing.html.twig BEGIN #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+        <h2>List of all categories</h2>
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <th># {{ loop.index }} </th>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.description }}</td>
+                        <td>
+                            {#
+                            <a href="{{ path('category.show', {id: category.id}) }}" class="btn btn-primary">Info</a>
+                            #}
+                            <a href="{{ path('category.delete', {id: category.id}) }}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('category.create') }}" class="btn btn-secondary btn-lg btn-block">Add new category</a>
+    </div>
+
+{% endblock %}
+{# template category/category-listing.html.twig END #}

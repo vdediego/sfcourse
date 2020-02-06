@@ -103,4 +103,19 @@ class PostController extends AbstractController
             'post' => $post
         ]);
     }
+
+    /**
+     * @Route("/showCategories/{postId}", name="showCategories")
+     * @param $postId
+     * @param PostRepository $postRepository
+     * @return Response
+     */
+    public function showCategories($postId, PostRepository $postRepository)
+    {
+        $postsData = $postRepository->findPostsWithinSameCategory($postId);
+dump($postsData);
+        return $this->render('post/post-category-listing.html.twig', [
+            'data' => $postsData
+        ]);
+    }
 }
