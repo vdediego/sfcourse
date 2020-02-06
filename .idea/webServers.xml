@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="057fb9a9-4cad-45a2-99a2-e4ced28bcda7" name="localhost:8080" url="http://localhost:8080/sfcourse/public/index.php">
+        <fileTransfer port="0" accessType="LOCAL" />
+      </webServer>
+    </option>
+  </component>
+</project>
