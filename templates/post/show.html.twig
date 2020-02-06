@@ -6,5 +6,8 @@
 
 {% block body %}
     <h1>{{ post.title }}</h1>
+    <h3>{{ post.description }}</h3>
+    <th></th>
+    <img src="{{ uploads_path ~ post.image }}" alt="">
 {% endblock %}
 {# template show.html.twig END #}

@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Post;
-use App\Form\PostType;
+use App\Form\PostForm;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,19 +40,31 @@ class PostController extends AbstractController
     {
         $post = new Post();
 
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(PostForm::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             // Entity Manager: interact with the DB
             $em = $this->getDoctrine()->getManager();
+            /** @var UploadedFile $file */
+            $file = $request->files->get('post_form')['attachment'];
 
-            // Final DB statement
-            $em->persist($post);
-            $em->flush();
+            if ($file) {
+                $filename = md5(uniqid()) . '.' . $file->guessClientExtension();
+                // Move file to uploads
+                $file->move(
+                    $this->getParameter('uploads_dir'),
+                    $filename
+                );
+
+                $post->setImage($filename);
+
+                // Final DB statement
+                $em->persist($post);
+                $em->flush();
+            }
 
             $this->addFlash('success', 'Post has been created successfully!');
-
             return $this->redirectToRoute('post.index');
         }
 
@@ -61,7 +74,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/delete", name="delete")
+     * @Route("/delete/{id}", name="delete")
      * @param Post $post
      * @return RedirectResponse
      */
