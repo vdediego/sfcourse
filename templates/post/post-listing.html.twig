@@ -17,6 +17,7 @@
                 <th>Title</th>
                 <th>Author</th>
                 <th>Description</th>
+                <th>Category</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -28,6 +29,7 @@
                         <td>{{ post.title }}</td>
                         <td>{{ post.author }}</td>
                         <td>{{ post.description }}</td>
+                        <td>{{ post.category }}</td>
                         <td>
                             <a href="{{ path('post.show', {id: post.id}) }}" class="btn btn-primary">More</a>
                             <a href="{{ path('post.delete', {id: post.id}) }}" class="btn btn-danger">Delete</a>
