@@ -100,4 +100,14 @@ class Category
 
         return $this;
     }
+
+    /**
+     * Need to implement this function due to inability to transform this object into a category name (used in PostForm.php)
+     *
+     * @return mixed
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
