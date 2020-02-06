@@ -36,6 +36,14 @@ class Post
      */
     private $image;
 
+    /**
+     * 'inversedBy' indicates the field that is going to hold the FK relation
+     * 'ManyToOne' indicates that the target is going to have 'many to one' relations with this field (category).
+     * In this case: many Posts can belong to one Category.
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="post")
+     */
+    private $category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +93,18 @@ class Post
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
